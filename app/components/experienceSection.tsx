@@ -1,7 +1,11 @@
-import { useCallback } from "react";
+import { useCallback, type RefObject } from "react";
 import experiences from "~/data/experience";
 
-const ExperienceSection = () => {
+interface ExpProps {
+  expRef: RefObject<HTMLElement | null>;
+}
+
+const ExperienceSection = ({ expRef }: ExpProps) => {
   const renderExp = useCallback(() => {
     return experiences.map((exp, index) => (
       <div
@@ -30,7 +34,7 @@ const ExperienceSection = () => {
     ));
   }, []);
   return (
-    <section id="experience" className="mt-3">
+    <section ref={expRef} id="experience" className="mt-3">
       <h3 className="text-3xl font-bold">Experience</h3>
       <hr />
       {renderExp()}

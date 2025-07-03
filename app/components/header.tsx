@@ -4,9 +4,9 @@ import {
   useLayoutEffect,
   useState,
   type ReactNode,
+  type RefObject,
   type SyntheticEvent,
 } from "react";
-import { useNavigate } from "react-router";
 import { styled, Tab, Tabs } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import tabs, { type tabObj } from "../data/tabs";
@@ -17,17 +17,35 @@ enum Theme {
   Dark = "dark",
   Light = "light",
 }
+enum Section {
+  Skill,
+  Exp,
+  Edu,
+}
 
-const Header = (): ReactNode => {
-  const navigate = useNavigate();
+interface HeaderProps {
+  skillRef: RefObject<HTMLElement | null>;
+  expRef: RefObject<HTMLElement | null>;
+  eduRef: RefObject<HTMLElement | null>;
+}
 
-  const [tab, setTab] = useState(0);
+const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
+  const [tab, setTab] = useState<Section>(Section.Skill);
   const [theme, setTheme] = useState<Theme>();
 
   const setRootTheme = (t: Theme) => {
     const root = document.getElementsByTagName("html")[0];
     root.dataset.theme = t;
   };
+  const onEntry = useCallback((section: Section) => {
+    return (entries: IntersectionObserverEntry[]) => {
+      const entry = entries[0];
+      console.log(section.toString(), entry.isIntersecting);
+      if (entry.isIntersecting) {
+        setTab(section);
+      }
+    };
+  }, []);
   useLayoutEffect(() => {
     const initialTheme = localStorage.getItem("theme");
     let t;
@@ -46,10 +64,39 @@ const Header = (): ReactNode => {
       setRootTheme(theme);
     }
   }, [theme]);
+  useEffect(() => {
+    const skillObserver = new IntersectionObserver(onEntry(Section.Skill));
+    const expObserver = new IntersectionObserver(onEntry(Section.Exp));
+    const eduObserver = new IntersectionObserver(onEntry(Section.Edu));
+    if (skillRef.current) {
+      skillObserver.observe(skillRef.current);
+    }
+    if (expRef.current) {
+      expObserver.observe(expRef.current);
+    }
+    if (eduRef.current) {
+      eduObserver.observe(eduRef.current);
+    }
+  }, []);
+
+  const scrollOptions: ScrollIntoViewOptions = {
+    behavior: "smooth",
+  };
 
   const onTabChange = (e: SyntheticEvent, value: number) => {
     setTab(value);
-    navigate(tabs[value].section);
+    switch (value) {
+      case Section.Skill:
+      default:
+        skillRef.current?.scrollIntoView(scrollOptions);
+        break;
+      case Section.Exp:
+        expRef.current?.scrollIntoView(scrollOptions);
+        break;
+      case Section.Edu:
+        eduRef.current?.scrollIntoView(scrollOptions);
+        break;
+    }
   };
   const onThemeChange = () => {
     setTheme((prev) => {
@@ -58,6 +105,10 @@ const Header = (): ReactNode => {
       return targetTheme;
     });
   };
+  const onHeaderPress = useCallback(() => {
+    // bioRef.current?.scrollIntoView(scrollOptions);
+    window.scroll({ top: 0, ...scrollOptions });
+  }, []);
 
   interface StyledTabProps {
     label: string;
@@ -112,13 +163,13 @@ const Header = (): ReactNode => {
   return (
     <header className="sticky top-0 right-0 left-0 z-10 px-4 pt-4 bg-white dark:bg-gray-950 shadow-xl/50 dark:shadow-main/50">
       <div className="flex w-full justify-between mb-5">
-        <a
-          href="#who"
-          className="w-fit hover:text-main transition-colors duration-200 ease-in-out"
+        <button
+          onClick={onHeaderPress}
+          className="w-fit text-left hover:text-main transition-colors duration-200 ease-in-out"
         >
           <h1 className="text-5xl font-extrabold">Caleb Ince</h1>
           <h2 className="text-4xl">Full Stack Software and DevOps Engineer</h2>
-        </a>
+        </button>
         <div className="flex w-fit mt-2">
           {renderLinks()}
           <span title="Change Theme">

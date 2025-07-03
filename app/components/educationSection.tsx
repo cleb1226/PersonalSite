@@ -1,7 +1,11 @@
-import { useCallback } from "react";
+import { useCallback, type RefObject } from "react";
 import education from "~/data/education";
 
-const EducationSection = () => {
+interface EduProps {
+  eduRef: RefObject<HTMLElement | null>;
+}
+
+const EducationSection = ({ eduRef }: EduProps) => {
   const renderEducation = useCallback(() => {
     return education.map((edu, index) => (
       <div
@@ -22,7 +26,7 @@ const EducationSection = () => {
     ));
   }, []);
   return (
-    <section id="education" className="mt-3">
+    <section ref={eduRef} id="education" className="mt-3">
       <h3 className="text-3xl font-bold">Education</h3>
       <hr />
       {renderEducation()}

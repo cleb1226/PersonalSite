@@ -1,7 +1,11 @@
-import { useCallback } from "react";
+import { useCallback, type RefObject } from "react";
 import skills, { type skillType } from "~/data/skills";
 
-const SkillsSection = () => {
+interface SkillProps {
+  skillRef: RefObject<HTMLElement | null>;
+}
+
+const SkillsSection = ({ skillRef }: SkillProps) => {
   const renderSkills = useCallback(
     () =>
       skills.map((skillSection: skillType) => {
@@ -30,7 +34,7 @@ const SkillsSection = () => {
   );
 
   return (
-    <section id="skills" className="mt-3">
+    <section ref={skillRef} id="skills" className="mt-3">
       <h3 className="text-3xl font-bold">Skills</h3>
       <hr />
       {renderSkills()}
