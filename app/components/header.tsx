@@ -40,7 +40,6 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
   const onEntry = useCallback((section: Section) => {
     return (entries: IntersectionObserverEntry[]) => {
       const entry = entries[0];
-      console.log(section.toString(), entry.isIntersecting);
       if (entry.isIntersecting) {
         setTab(section);
       }
