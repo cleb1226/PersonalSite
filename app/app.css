@@ -3,13 +3,27 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --color-main: oklch(70.4% 0.191 22.216);
+}
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@property --hoverColor {
+  syntax: "<color>";
+  initial-value: oklch(70.4% 0.191 22.216);
+  inherits: false;
 }
 
 html,
 body {
   @apply bg-white dark:bg-gray-950;
+  @apply text-gray-950 dark:text-white;
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+  scroll-padding-top: 11rem;
+}
+
+.MuiTab-root {
+  --hoverColor: transparent;
+  transition: --hoverColor 300ms ease-in-out;
+}
+.MuiTab-root:hover {
+  --hoverColor: --color-main;
 }
