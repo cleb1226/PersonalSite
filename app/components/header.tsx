@@ -105,7 +105,6 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
     });
   };
   const onHeaderPress = useCallback(() => {
-    // bioRef.current?.scrollIntoView(scrollOptions);
     window.scroll({ top: 0, ...scrollOptions });
   }, []);
 

@@ -4,7 +4,6 @@ export type tabObj = {
 };
 
 const tabs: Array<tabObj> = [
-  // { name: "Who I Am", section: "#who" },
   { name: "Skills", section: "#skills" },
   { name: "Experience", section: "#experience" },
   { name: "Education", section: "#education" },
