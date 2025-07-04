@@ -16,11 +16,11 @@ const EducationSection = ({ eduRef }: EduProps) => {
           <h3 className="text-2xl font-semibold">
             {edu.level}, {edu.field}
           </h3>
-          <span>{edu.finished}</span>
+          <span className="text-right">{edu.finished}</span>
         </div>
         <div className="flex justify-between">
           <span className="font-semibold">{edu.provider}</span>
-          <span>{edu.location}</span>
+          <span className="text-right">{edu.location}</span>
         </div>
       </div>
     ));

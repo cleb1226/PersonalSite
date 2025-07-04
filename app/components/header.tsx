@@ -3,25 +3,23 @@ import {
   useEffect,
   useLayoutEffect,
   useState,
+  type MouseEvent,
   type ReactNode,
   type RefObject,
   type SyntheticEvent,
 } from "react";
-import { styled, Tab, Tabs } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import tabs, { type tabObj } from "../data/tabs";
 import links, { type linkObj } from "../data/links";
-import { faSun } from "@fortawesome/free-regular-svg-icons";
-
-enum Theme {
-  Dark = "dark",
-  Light = "light",
-}
-enum Section {
-  Skill,
-  Exp,
-  Edu,
-}
+import Tab from "./tab";
+import Tabs from "./tabs";
+import Section from "~/enums/section";
+import Theme from "~/enums/theme";
+import HeaderLinks from "./headerLinks";
+import { Menu, MenuItem } from "@mui/material";
+import { useNavigate } from "react-router";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
 
 interface HeaderProps {
   skillRef: RefObject<HTMLElement | null>;
@@ -30,8 +28,11 @@ interface HeaderProps {
 }
 
 const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
+  const navigate = useNavigate();
+
   const [tab, setTab] = useState<Section>(Section.Skill);
   const [theme, setTheme] = useState<Theme>();
+  const [menu, setMenu] = useState<HTMLElement | null>(null);
 
   const setRootTheme = (t: Theme) => {
     const root = document.getElementsByTagName("html")[0];
@@ -64,9 +65,15 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
     }
   }, [theme]);
   useEffect(() => {
-    const skillObserver = new IntersectionObserver(onEntry(Section.Skill));
-    const expObserver = new IntersectionObserver(onEntry(Section.Exp));
-    const eduObserver = new IntersectionObserver(onEntry(Section.Edu));
+    const options: IntersectionObserverInit = {
+      threshold: 0.25,
+    };
+    const skillObserver = new IntersectionObserver(
+      onEntry(Section.Skill),
+      options
+    );
+    const expObserver = new IntersectionObserver(onEntry(Section.Exp), options);
+    const eduObserver = new IntersectionObserver(onEntry(Section.Edu), options);
     if (skillRef.current) {
       skillObserver.observe(skillRef.current);
     }
@@ -107,88 +114,60 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
   const onHeaderPress = useCallback(() => {
     window.scroll({ top: 0, ...scrollOptions });
   }, []);
-
-  interface StyledTabProps {
-    label: string;
-  }
-  interface StyledTabsProps {
-    children?: React.ReactNode;
-    value: number;
-    onChange: (event: React.SyntheticEvent, newValue: number) => void;
-    textColor?: "inherit" | "secondary" | "primary" | undefined;
-    variant: "standard" | "scrollable" | "fullWidth" | undefined;
-  }
-
-  const CustomTabs = styled((props: StyledTabsProps) => <Tabs {...props} />)({
-    "& .MuiTabs-indicator": {
-      backgroundColor: "red",
-    },
-  });
-
-  const CustomTab = styled((props: StyledTabProps) => <Tab {...props} />)(
-    () => ({
-      background:
-        "radial-gradient(ellipse farthest-side at bottom,var(--hoverColor),transparent)",
-    })
-  );
+  const onMenuClick = useCallback((e: MouseEvent<HTMLElement>) => {
+    setMenu(e.currentTarget);
+  }, []);
+  const onMenuClose = useCallback(() => {
+    setMenu(null);
+  }, []);
 
   const renderTab = useCallback(
     () =>
       tabs.map((tab: tabObj, index: number) => (
-        <CustomTab label={tab.name} key={`control-tab-${index}`} />
+        <Tab label={tab.name} key={`control-tab-${index}`} />
       )),
     []
   );
-  const renderLinks = useCallback(
+  const renderMenuItems = useCallback(
     () =>
-      links.map((link: linkObj, index: number) => (
-        <a
-          title={link.title}
-          href={link.href}
-          target="_blank"
-          key={`header-link-${index}`}
-        >
-          <FontAwesomeIcon
-            className="mx-3 hover:text-main/80 transition-colors"
-            icon={link.icon}
-            size="2x"
-          />
-        </a>
-      )),
+      links.map((link: linkObj, index: number) => {
+        const onClick = (e: MouseEvent<HTMLElement>) => {
+          onMenuClick(e);
+          window.open(link.href, "_blank", "rel=noopener noreferrer");
+        };
+        return (
+          <MenuItem onClick={onClick}>
+            <FontAwesomeIcon className="mr-1" icon={link.icon} size="2x" />
+            {link.title}
+          </MenuItem>
+        );
+      }),
     []
   );
 
   return (
     <header className="sticky top-0 right-0 left-0 z-10 px-4 pt-4 bg-white dark:bg-gray-950 shadow-xl/50 dark:shadow-main/50">
-      <div className="flex w-full justify-between mb-5">
+      <div className="flex flex-nowrap flex-row justify-between w-full mb-5">
         <button
           onClick={onHeaderPress}
-          className="w-fit text-left hover:text-main transition-colors duration-200 ease-in-out"
+          className="sm:w-fit text-left cursor-pointer hover:text-main transition-colors duration-200 ease-in-out"
         >
           <h1 className="text-5xl font-extrabold">Caleb Ince</h1>
           <h2 className="text-4xl">Full Stack Software and DevOps Engineer</h2>
         </button>
-        <div className="flex w-fit mt-2">
-          {renderLinks()}
-          <span title="Change Theme">
-            <FontAwesomeIcon
-              icon={faSun}
-              size="2x"
-              className="mx-3 hover:text-main/80 transition-colors"
-              onClick={onThemeChange}
-            />
-          </span>
+        <div className="flex">
+          <HeaderLinks currentTheme={theme} onThemeChange={onThemeChange} />
         </div>
       </div>
       <div className="w-full">
-        <CustomTabs
+        <Tabs
           textColor="inherit"
           value={tab}
           onChange={onTabChange}
           variant="fullWidth"
         >
           {renderTab()}
-        </CustomTabs>
+        </Tabs>
       </div>
     </header>
   );

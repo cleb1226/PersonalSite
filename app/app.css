@@ -18,12 +18,19 @@ body {
   @apply text-gray-950 dark:text-white;
 
   scroll-padding-top: 11rem;
+  @media (width <= 28rem) {
+    scroll-padding-top: 18rem;
+  }
+  @media (width <= 20rem) {
+    scroll-padding-top: 25rem;
+  }
 }
 
 .MuiTab-root {
   --hoverColor: transparent;
   transition: --hoverColor 300ms ease-in-out;
 }
-.MuiTab-root:hover {
+.MuiTab-root:hover,
+.Mui-selected {
   --hoverColor: --color-main;
 }
