@@ -152,8 +152,10 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
           onClick={onHeaderPress}
           className="sm:w-fit text-left cursor-pointer hover:text-main transition-colors duration-200 ease-in-out"
         >
-          <h1 className="text-5xl font-extrabold">Caleb Ince</h1>
-          <h2 className="text-4xl">Full Stack Software and DevOps Engineer</h2>
+          <h1 className="text-3xl sm:text-5xl font-extrabold">Caleb Ince</h1>
+          <h2 className="text-2xl sm:text-4xl">
+            Full Stack Software and DevOps Engineer
+          </h2>
         </button>
         <div className="flex">
           <HeaderLinks currentTheme={theme} onThemeChange={onThemeChange} />

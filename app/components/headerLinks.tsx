@@ -18,12 +18,12 @@ const HeaderLinks = ({ onThemeChange, currentTheme }: HeaderLinksProps) => {
           href={link.href}
           target="_blank"
           key={`header-link-${index}`}
-          className="flex justify-center my-2 sm:mx-3"
+          className="flex justify-center text-lg sm:text-4xl my-2 sm:mx-3"
         >
           <FontAwesomeIcon
             className="hover:text-main/80 transition-colors"
             icon={link.icon}
-            size="2x"
+            // size="2x"
           />
         </a>
       )),
@@ -35,11 +35,10 @@ const HeaderLinks = ({ onThemeChange, currentTheme }: HeaderLinksProps) => {
       {renderLinks()}
       <span
         title="Change Theme"
-        className="flex justify-center my-2 sm:mx-3 cursor-pointer"
+        className="flex justify-center text-lg sm:text-4xl my-2 sm:mx-3 cursor-pointer"
       >
         <FontAwesomeIcon
           icon={currentTheme === Theme.Dark ? faMoon : faSun}
-          size="2x"
           className="hover:text-main/80 transition-colors"
           onClick={onThemeChange}
         />
