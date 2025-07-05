@@ -23,7 +23,6 @@ const HeaderLinks = ({ onThemeChange, currentTheme }: HeaderLinksProps) => {
           <FontAwesomeIcon
             className="hover:text-main/80 transition-colors"
             icon={link.icon}
-            // size="2x"
           />
         </a>
       )),
