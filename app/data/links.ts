@@ -3,11 +3,12 @@ import {
   faLinkedin,
   type IconDefinition,
 } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
+import { faEnvelope, faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
 
 export type linkObj = {
-  href: string;
+  href?: string;
   icon: IconDefinition;
+  iconFunction?: (bool: boolean) => IconDefinition;
   title: string;
 };
 
@@ -19,6 +20,11 @@ const links: Array<linkObj> = [
     title: "LinkedIn",
   },
   { href: "https://github.com/cleb1226", icon: faGithub, title: "Github" },
+  {
+    iconFunction: (bool) => (bool ? faMoon : faSun),
+    title: "Change Theme",
+    icon: faMoon,
+  },
 ];
 
 export default links;

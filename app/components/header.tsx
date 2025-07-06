@@ -28,14 +28,6 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
     const root = document.getElementsByTagName("html")[0];
     root.dataset.theme = t;
   };
-  const onEntry = useCallback((section: Section) => {
-    return (entries: IntersectionObserverEntry[]) => {
-      const entry = entries[0];
-      if (entry.isIntersecting) {
-        setTab(section);
-      }
-    };
-  }, []);
   useLayoutEffect(() => {
     const initialTheme = localStorage.getItem("theme");
     let t;
@@ -58,21 +50,51 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
     const options: IntersectionObserverInit = {
       threshold: 0.25,
     };
-    const skillObserver = new IntersectionObserver(
-      onEntry(Section.Skill),
+    const observer = new IntersectionObserver(
+      (entries: IntersectionObserverEntry[]) => {
+        const visibles = entries.filter((entry) => entry.isIntersecting); //.sort((a,b)=>b.intersectionRatio-a.intersectionRatio)
+
+        if (visibles.length > 0) {
+          let biggest = visibles[0];
+          console.log(
+            "current element",
+            biggest.target.id,
+            biggest.intersectionRatio
+          );
+          for (let i = 1; i < visibles.length; i++) {
+            let currentElement = visibles[i];
+            if (currentElement.intersectionRatio > biggest.intersectionRatio) {
+              biggest = currentElement;
+            }
+            console.log(
+              "current element",
+              currentElement.target.id,
+              currentElement.intersectionRatio
+            );
+          }
+          const currentTab = tabs.find((t) => t.section === biggest.target.id);
+          if (currentTab) {
+            setTab(currentTab.sectionValue);
+          }
+        }
+      },
       options
     );
-    const expObserver = new IntersectionObserver(onEntry(Section.Exp), options);
-    const eduObserver = new IntersectionObserver(onEntry(Section.Edu), options);
-    if (skillRef.current) {
-      skillObserver.observe(skillRef.current);
-    }
-    if (expRef.current) {
-      expObserver.observe(expRef.current);
-    }
-    if (eduRef.current) {
-      eduObserver.observe(eduRef.current);
-    }
+
+    const refs = [skillRef, expRef, eduRef];
+    refs.forEach((ref) => {
+      if (ref?.current) {
+        observer.observe(ref.current);
+      }
+    });
+
+    return () => {
+      refs.forEach((ref) => {
+        if (ref?.current) {
+          observer.unobserve(ref.current);
+        }
+      });
+    };
   }, []);
 
   const scrollOptions: ScrollIntoViewOptions = {

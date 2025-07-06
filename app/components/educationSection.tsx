@@ -20,7 +20,6 @@ const EducationSection = ({ eduRef }: EduProps) => {
         </div>
         <div className="flex justify-between">
           <span className="font-semibold">{edu.provider}</span>
-          <span className="text-right">{edu.location}</span>
         </div>
       </div>
     ));
