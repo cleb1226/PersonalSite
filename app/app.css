@@ -19,10 +19,10 @@ body {
 
   scroll-padding-top: 11rem;
   @media (width <= 28rem) {
-    scroll-padding-top: 18rem;
+    scroll-padding-top: 12rem;
   }
   @media (width <= 20rem) {
-    scroll-padding-top: 25rem;
+    scroll-padding-top: 14rem;
   }
 }
 
