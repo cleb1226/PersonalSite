@@ -17,36 +17,18 @@ import HeaderLinks from "./headerLinks";
 import type { InViewHookResponse } from "react-intersection-observer";
 
 interface HeaderProps {
-  skillInView: InViewHookResponse;
-  expInView: InViewHookResponse;
-  eduInView: InViewHookResponse;
   skillRef: RefObject<HTMLElement | null>;
   expRef: RefObject<HTMLElement | null>;
   eduRef: RefObject<HTMLElement | null>;
 }
 
-const Header = ({
-  skillInView,
-  expInView,
-  eduInView,
-  skillRef,
-  expRef,
-  eduRef,
-}: HeaderProps): ReactNode => {
-  const [tab, setTab] = useState<Section>(Section.Skill);
-  const [theme, setTheme] = useState<Theme>();
-  const headerRef = useRef<HTMLElement | null>(null);
+const root = document.getElementsByTagName("html")[0];
 
-  const root = document.getElementsByTagName("html")[0];
+const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
   const setRootTheme = (t: Theme) => {
     root.dataset.theme = t;
   };
-  useLayoutEffect(() => {
-    root.className = headerRef.current?.offsetHeight
-      ? `scroll-pt-[${headerRef.current?.offsetHeight}px]`
-      : "";
-  }, [headerRef.current?.offsetHeight]);
-  useLayoutEffect(() => {
+  const getTheme = () => {
     const initialTheme = localStorage.getItem("theme");
     let t;
 
@@ -57,12 +39,21 @@ const Header = ({
         ? Theme.Dark
         : Theme.Light;
     }
-    setTheme(t);
-  }, []);
+    setRootTheme(t);
+    return t;
+  };
+
+  const [tab, setTab] = useState<Section>(Section.Skill);
+  const [theme, setTheme] = useState<Theme>(getTheme());
+  const headerRef = useRef<HTMLElement | null>(null);
+
+  useLayoutEffect(() => {
+    root.className = headerRef.current?.offsetHeight
+      ? `scroll-pt-[${headerRef.current?.offsetHeight}px]`
+      : "";
+  }, [headerRef.current?.offsetHeight]);
   useEffect(() => {
-    if (theme) {
-      setRootTheme(theme);
-    }
+    setRootTheme(theme);
   }, [theme]);
   useEffect(() => {
     const options: IntersectionObserverInit = {
@@ -123,25 +114,20 @@ const Header = ({
     () =>
       tabs.map((tab: tabObj, index: number) => {
         const onClick = () => {
-          // let targetRef: InViewHookResponse | null = null;
           let targetRef: RefObject<HTMLElement | null>;
           switch (tab.sectionValue) {
             case Section.Skill:
             default:
-              // targetRef = skillInView;
               targetRef = skillRef;
               break;
             case Section.Exp:
-              // targetRef = expInView;
               targetRef = expRef;
               break;
             case Section.Edu:
-              // targetRef = eduInView;
               targetRef = eduRef;
               break;
           }
           targetRef.current?.scrollIntoView(scrollOptions);
-          // targetRef?.entry?.target.scrollIntoView(scrollOptions);
         };
         return (
           <Tab
@@ -151,7 +137,7 @@ const Header = ({
           />
         );
       }),
-    [skillInView, expInView, eduInView]
+    []
   );
 
   return (
