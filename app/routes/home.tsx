@@ -9,7 +9,7 @@ import {
   type InViewHookResponse,
 } from "react-intersection-observer";
 import { createTheme, useMediaQuery, useTheme } from "@mui/material";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef, type RefObject } from "react";
 import Section from "~/enums/section";
 
 export function meta({}: Route.MetaArgs) {
@@ -37,6 +37,10 @@ const theme = createTheme({
 });
 
 export default function Home() {
+  const skillRef = useRef<HTMLElement | null>(null);
+  const expRef = useRef<HTMLElement | null>(null);
+  const eduRef = useRef<HTMLElement | null>(null);
+
   const isSm = useMediaQuery(theme.breakpoints.down("sm"));
   const isMd = useMediaQuery(theme.breakpoints.between("sm", "lg"));
 
@@ -93,12 +97,18 @@ export default function Home() {
         skillInView={skillInView}
         expInView={expInView}
         eduInView={eduInView}
+        skillRef={skillRef}
+        expRef={expRef}
+        eduRef={eduRef}
       />
       <div className="p-5">
         <Bio />
-        <SkillsSection skillRef={skillInView.ref} />
+        {/* <SkillsSection skillRef={skillInView.ref} />
         <ExperienceSection expRef={expInView.ref} />
-        <EducationSection eduRef={eduInView.ref} />
+        <EducationSection eduRef={eduInView.ref} /> */}
+        <SkillsSection skillRef={skillRef} />
+        <ExperienceSection expRef={expRef} />
+        <EducationSection eduRef={eduRef} />
       </div>
     </div>
   );

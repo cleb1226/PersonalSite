@@ -1,10 +1,12 @@
 import {
   useCallback,
+  useContext,
   useEffect,
   useLayoutEffect,
+  useRef,
   useState,
   type ReactNode,
-  type SyntheticEvent,
+  type RefObject,
 } from "react";
 import tabs, { type tabObj } from "../data/tabs";
 import Tab from "./tab";
@@ -18,20 +20,32 @@ interface HeaderProps {
   skillInView: InViewHookResponse;
   expInView: InViewHookResponse;
   eduInView: InViewHookResponse;
+  skillRef: RefObject<HTMLElement | null>;
+  expRef: RefObject<HTMLElement | null>;
+  eduRef: RefObject<HTMLElement | null>;
 }
 
 const Header = ({
   skillInView,
   expInView,
   eduInView,
+  skillRef,
+  expRef,
+  eduRef,
 }: HeaderProps): ReactNode => {
   const [tab, setTab] = useState<Section>(Section.Skill);
   const [theme, setTheme] = useState<Theme>();
+  const headerRef = useRef<HTMLElement | null>(null);
 
+  const root = document.getElementsByTagName("html")[0];
   const setRootTheme = (t: Theme) => {
-    const root = document.getElementsByTagName("html")[0];
     root.dataset.theme = t;
   };
+  useLayoutEffect(() => {
+    root.className = headerRef.current?.offsetHeight
+      ? `scroll-pt-[${headerRef.current?.offsetHeight}px]`
+      : "";
+  }, [headerRef.current?.offsetHeight]);
   useLayoutEffect(() => {
     const initialTheme = localStorage.getItem("theme");
     let t;
@@ -51,44 +65,49 @@ const Header = ({
     }
   }, [theme]);
   useEffect(() => {
-    const inViews = [skillInView, expInView, eduInView];
-    const visibleRefs = inViews
-      .filter((entry) => entry.inView)
-      .sort((a, b) => {
-        const first = a.entry?.boundingClientRect.top || 0;
-        const second = b.entry?.boundingClientRect.top || 0;
-        return second - first;
-      });
+    const options: IntersectionObserverInit = {
+      threshold: 0.2,
+      rootMargin: `-${headerRef?.current?.offsetHeight || 0}px 0px 0px -25%`,
+    };
+    const callback: IntersectionObserverCallback = (entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting);
+      if (visible.length > 0) {
+        setTab((prev) => {
+          visible.sort(
+            (a, b) => b.boundingClientRect.bottom - a.boundingClientRect.bottom
+          );
 
-    const currentTab = tabs.find(
-      (t) => t.section === visibleRefs[0]?.entry?.target.id
-    );
-    if (currentTab) {
-      setTab(currentTab.sectionValue);
-    }
-  }, [skillInView.inView, expInView.inView, eduInView.inView]);
+          const currentTab = tabs.find(
+            (t) => t.section === visible[0]?.target.id
+          );
+          if (currentTab && currentTab.sectionValue !== prev) {
+            return currentTab.sectionValue;
+          }
+          return prev;
+        });
+      }
+    };
+    const observer = new IntersectionObserver(callback, options);
+    const refs = [skillRef, expRef, eduRef];
+    refs.forEach((ref) => {
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    });
+
+    return () => {
+      refs.forEach((ref) => {
+        if (ref.current) {
+          observer.unobserve(ref.current);
+        }
+      });
+    };
+  }, [skillRef, expRef, eduRef]);
 
   const scrollOptions: ScrollIntoViewOptions = {
     behavior: "smooth",
   };
 
-  // const onTabChange = (e: SyntheticEvent, value: number) => {
-  //   let targetRef: InViewHookResponse | null = null;
-  //   switch (value) {
-  //     case Section.Skill:
-  //     default:
-  //       targetRef = skillInView;
-  //       break;
-  //     case Section.Exp:
-  //       targetRef = expInView;
-  //       break;
-  //     case Section.Edu:
-  //       targetRef = eduInView;
-  //       break;
-  //   }
-
-  //   targetRef?.entry?.target.scrollIntoView(scrollOptions);
-  // };
   const onThemeChange = () => {
     setTheme((prev) => {
       const targetTheme = prev === Theme.Dark ? Theme.Light : Theme.Dark;
@@ -104,21 +123,25 @@ const Header = ({
     () =>
       tabs.map((tab: tabObj, index: number) => {
         const onClick = () => {
-          let targetRef: InViewHookResponse | null = null;
+          // let targetRef: InViewHookResponse | null = null;
+          let targetRef: RefObject<HTMLElement | null>;
           switch (tab.sectionValue) {
             case Section.Skill:
             default:
-              targetRef = skillInView;
+              // targetRef = skillInView;
+              targetRef = skillRef;
               break;
             case Section.Exp:
-              targetRef = expInView;
+              // targetRef = expInView;
+              targetRef = expRef;
               break;
             case Section.Edu:
-              targetRef = eduInView;
+              // targetRef = eduInView;
+              targetRef = eduRef;
               break;
           }
-
-          targetRef?.entry?.target.scrollIntoView(scrollOptions);
+          targetRef.current?.scrollIntoView(scrollOptions);
+          // targetRef?.entry?.target.scrollIntoView(scrollOptions);
         };
         return (
           <Tab
@@ -132,7 +155,10 @@ const Header = ({
   );
 
   return (
-    <header className="sticky top-0 right-0 left-0 z-10 px-4 pt-4 bg-white dark:bg-gray-950 shadow-xl/50 dark:shadow-main/50">
+    <header
+      ref={headerRef}
+      className="sticky top-0 right-0 left-0 z-10 px-4 pt-4 bg-white dark:bg-gray-950 shadow-xl/50 dark:shadow-main/50"
+    >
       <div className="flex flex-nowrap flex-row justify-between w-full mb-5">
         <button
           onClick={onHeaderPress}

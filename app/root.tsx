@@ -10,6 +10,14 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import { Skeleton } from "@mui/material";
+import {
+  createContext,
+  useEffect,
+  useReducer,
+  useRef,
+  type RefObject,
+} from "react";
+import { HeaderRefContext } from "./components/headerRef";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -26,11 +34,7 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      data-theme="dark"
-      className="scroll-pt-50 sm:scroll-pt-55 md:scroll-pt-55 lg:scroll-pt-45"
-    >
+    <html lang="en" data-theme="dark">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

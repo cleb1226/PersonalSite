@@ -2,7 +2,8 @@ import { useCallback, type RefObject } from "react";
 import skills, { type skillType } from "~/data/skills";
 
 interface SkillProps {
-  skillRef: (node?: Element | null) => void;
+  // skillRef: (node?: Element | null) => void;
+  skillRef: RefObject<HTMLElement | null>;
 }
 
 const SkillsSection = ({ skillRef }: SkillProps) => {
