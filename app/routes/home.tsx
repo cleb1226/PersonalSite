@@ -4,7 +4,10 @@ import SkillsSection from "~/components/skillsSection";
 import ExperienceSection from "~/components/experienceSection";
 import EducationSection from "~/components/educationSection";
 import Bio from "~/components/bio";
-import { useRef } from "react";
+import {
+  useInView,
+  type InViewHookResponse,
+} from "react-intersection-observer";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -14,18 +17,28 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  const skillRef = useRef<HTMLElement>(null);
-  const expRef = useRef<HTMLElement>(null);
-  const eduRef = useRef<HTMLElement>(null);
+  const skillInView: InViewHookResponse = useInView({
+    threshold: [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+  });
+  const expInView: InViewHookResponse = useInView({
+    threshold: [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+  });
+  const eduInView: InViewHookResponse = useInView({
+    threshold: [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+  });
 
   return (
     <div>
-      <Header skillRef={skillRef} expRef={expRef} eduRef={eduRef} />
+      <Header
+        skillInView={skillInView}
+        expInView={expInView}
+        eduInView={eduInView}
+      />
       <div className="p-5">
         <Bio />
-        <SkillsSection skillRef={skillRef} />
-        <ExperienceSection expRef={expRef} />
-        <EducationSection eduRef={eduRef} />
+        <SkillsSection skillRef={skillInView.ref} />
+        <ExperienceSection expRef={expInView.ref} />
+        <EducationSection eduRef={eduInView.ref} />
       </div>
     </div>
   );

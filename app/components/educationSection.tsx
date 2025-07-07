@@ -2,7 +2,7 @@ import { useCallback, type RefObject } from "react";
 import education from "~/data/education";
 
 interface EduProps {
-  eduRef: RefObject<HTMLElement | null>;
+  eduRef: (node?: Element | null) => void;
 }
 
 const EducationSection = ({ eduRef }: EduProps) => {

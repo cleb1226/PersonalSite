@@ -2,7 +2,7 @@ import { useCallback, type RefObject } from "react";
 import experiences from "~/data/experience";
 
 interface ExpProps {
-  expRef: RefObject<HTMLElement | null>;
+  expRef: (node?: Element | null) => void;
 }
 
 const ExperienceSection = ({ expRef }: ExpProps) => {

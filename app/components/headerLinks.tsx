@@ -45,7 +45,7 @@ const HeaderLinks = ({ onThemeChange, currentTheme }: HeaderLinksProps) => {
           </a>
         );
       }),
-    []
+    [currentTheme]
   );
 
   return (

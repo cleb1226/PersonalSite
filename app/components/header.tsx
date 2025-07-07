@@ -4,7 +4,6 @@ import {
   useLayoutEffect,
   useState,
   type ReactNode,
-  type RefObject,
   type SyntheticEvent,
 } from "react";
 import tabs, { type tabObj } from "../data/tabs";
@@ -13,14 +12,19 @@ import Tabs from "./tabs";
 import Section from "~/enums/section";
 import Theme from "~/enums/theme";
 import HeaderLinks from "./headerLinks";
+import type { InViewHookResponse } from "react-intersection-observer";
 
 interface HeaderProps {
-  skillRef: RefObject<HTMLElement | null>;
-  expRef: RefObject<HTMLElement | null>;
-  eduRef: RefObject<HTMLElement | null>;
+  skillInView: InViewHookResponse;
+  expInView: InViewHookResponse;
+  eduInView: InViewHookResponse;
 }
 
-const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
+const Header = ({
+  skillInView,
+  expInView,
+  eduInView,
+}: HeaderProps): ReactNode => {
   const [tab, setTab] = useState<Section>(Section.Skill);
   const [theme, setTheme] = useState<Theme>();
 
@@ -47,73 +51,43 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
     }
   }, [theme]);
   useEffect(() => {
-    const options: IntersectionObserverInit = {
-      threshold: 0.25,
-    };
-    const observer = new IntersectionObserver(
-      (entries: IntersectionObserverEntry[]) => {
-        const visibles = entries.filter((entry) => entry.isIntersecting); //.sort((a,b)=>b.intersectionRatio-a.intersectionRatio)
-
-        if (visibles.length > 0) {
-          let biggest = visibles[0];
-          console.log(
-            "current element",
-            biggest.target.id,
-            biggest.intersectionRatio
-          );
-          for (let i = 1; i < visibles.length; i++) {
-            let currentElement = visibles[i];
-            if (currentElement.intersectionRatio > biggest.intersectionRatio) {
-              biggest = currentElement;
-            }
-            console.log(
-              "current element",
-              currentElement.target.id,
-              currentElement.intersectionRatio
-            );
-          }
-          const currentTab = tabs.find((t) => t.section === biggest.target.id);
-          if (currentTab) {
-            setTab(currentTab.sectionValue);
-          }
-        }
-      },
-      options
-    );
-
-    const refs = [skillRef, expRef, eduRef];
-    refs.forEach((ref) => {
-      if (ref?.current) {
-        observer.observe(ref.current);
-      }
-    });
-
-    return () => {
-      refs.forEach((ref) => {
-        if (ref?.current) {
-          observer.unobserve(ref.current);
-        }
+    const inViews = [skillInView, expInView, eduInView];
+    const visibleRefs = inViews
+      .filter((entry) => entry.inView)
+      .sort((a, b) => {
+        const first = a.entry?.boundingClientRect.top || 0;
+        const second = b.entry?.boundingClientRect.top || 0;
+        return second - first;
       });
-    };
-  }, []);
+
+    const currentTab = tabs.find(
+      (t) => t.section === visibleRefs[0]?.entry?.target.id
+    );
+    if (currentTab) {
+      setTab(currentTab.sectionValue);
+    }
+  }, [skillInView.inView, expInView.inView, eduInView.inView]);
 
   const scrollOptions: ScrollIntoViewOptions = {
     behavior: "smooth",
   };
 
   const onTabChange = (e: SyntheticEvent, value: number) => {
+    let targetRef: InViewHookResponse | null = null;
     switch (value) {
       case Section.Skill:
       default:
-        skillRef.current?.scrollIntoView(scrollOptions);
+        targetRef = skillInView;
         break;
       case Section.Exp:
-        expRef.current?.scrollIntoView(scrollOptions);
+        targetRef = expInView;
         break;
       case Section.Edu:
-        eduRef.current?.scrollIntoView(scrollOptions);
+        targetRef = eduInView;
         break;
     }
+
+    targetRef?.entry?.target.scrollIntoView(scrollOptions);
   };
   const onThemeChange = () => {
     setTheme((prev) => {
