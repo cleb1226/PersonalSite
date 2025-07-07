@@ -72,23 +72,23 @@ const Header = ({
     behavior: "smooth",
   };
 
-  const onTabChange = (e: SyntheticEvent, value: number) => {
-    let targetRef: InViewHookResponse | null = null;
-    switch (value) {
-      case Section.Skill:
-      default:
-        targetRef = skillInView;
-        break;
-      case Section.Exp:
-        targetRef = expInView;
-        break;
-      case Section.Edu:
-        targetRef = eduInView;
-        break;
-    }
+  // const onTabChange = (e: SyntheticEvent, value: number) => {
+  //   let targetRef: InViewHookResponse | null = null;
+  //   switch (value) {
+  //     case Section.Skill:
+  //     default:
+  //       targetRef = skillInView;
+  //       break;
+  //     case Section.Exp:
+  //       targetRef = expInView;
+  //       break;
+  //     case Section.Edu:
+  //       targetRef = eduInView;
+  //       break;
+  //   }
 
-    targetRef?.entry?.target.scrollIntoView(scrollOptions);
-  };
+  //   targetRef?.entry?.target.scrollIntoView(scrollOptions);
+  // };
   const onThemeChange = () => {
     setTheme((prev) => {
       const targetTheme = prev === Theme.Dark ? Theme.Light : Theme.Dark;
@@ -102,10 +102,33 @@ const Header = ({
 
   const renderTab = useCallback(
     () =>
-      tabs.map((tab: tabObj, index: number) => (
-        <Tab label={tab.name} key={`control-tab-${index}`} />
-      )),
-    []
+      tabs.map((tab: tabObj, index: number) => {
+        const onClick = () => {
+          let targetRef: InViewHookResponse | null = null;
+          switch (tab.sectionValue) {
+            case Section.Skill:
+            default:
+              targetRef = skillInView;
+              break;
+            case Section.Exp:
+              targetRef = expInView;
+              break;
+            case Section.Edu:
+              targetRef = eduInView;
+              break;
+          }
+
+          targetRef?.entry?.target.scrollIntoView(scrollOptions);
+        };
+        return (
+          <Tab
+            onClick={onClick}
+            label={tab.name}
+            key={`control-tab-${index}`}
+          />
+        );
+      }),
+    [skillInView, expInView, eduInView]
   );
 
   return (
@@ -125,12 +148,7 @@ const Header = ({
         </div>
       </div>
       <div className="w-full">
-        <Tabs
-          textColor="inherit"
-          value={tab}
-          onChange={onTabChange}
-          variant="fullWidth"
-        >
+        <Tabs textColor="inherit" value={tab} variant="fullWidth">
           {renderTab()}
         </Tabs>
       </div>

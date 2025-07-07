@@ -4,6 +4,8 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --color-main: oklch(70.4% 0.191 22.216);
+  --breakpoint-lg: 57rem;
+  --breakpoint-sm: 39rem;
 }
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 @property --hoverColor {
@@ -17,13 +19,16 @@ body {
   @apply bg-white dark:bg-gray-950;
   @apply text-gray-950 dark:text-white;
 
-  scroll-padding-top: 11rem;
-  @media (width <= 28rem) {
+  /* scroll-padding-top: 12rem;
+  @media (width > --breakpoint-sm) {
+    scroll-padding-top: 25rem;
+  } */
+  /* @media (width <= 28rem) {
     scroll-padding-top: 12rem;
   }
   @media (width <= 20rem) {
     scroll-padding-top: 14rem;
-  }
+  } */
 }
 
 .MuiTab-root {

@@ -1,10 +1,6 @@
 import { styled, Tab as MuiTab } from "@mui/material";
 
-interface StyledTabProps {
-  label: string;
-}
-
-const Tab = styled((props: StyledTabProps) => <MuiTab {...props} />)(() => ({
+const Tab = styled(MuiTab)(() => ({
   background:
     "radial-gradient(ellipse farthest-side at bottom,var(--hoverColor),transparent)",
 }));
