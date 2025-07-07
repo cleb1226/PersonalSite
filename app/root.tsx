@@ -34,7 +34,11 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="dark">
+    <html
+      lang="en"
+      data-theme="dark"
+      className="scroll-pt-50 sm:scroll-pt-55 md:scroll-pt-55 lg:scroll-pt-45"
+    >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -42,6 +46,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
+        {/* <HeaderRefContext value={ref}>{children}</HeaderRefContext> */}
         {children}
         <ScrollRestoration />
         <Scripts />

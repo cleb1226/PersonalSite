@@ -22,10 +22,9 @@ interface HeaderProps {
   eduRef: RefObject<HTMLElement | null>;
 }
 
-const root = document.getElementsByTagName("html")[0];
-
 const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
   const setRootTheme = (t: Theme) => {
+    const root = document.getElementsByTagName("html")[0];
     root.dataset.theme = t;
   };
   const getTheme = () => {
@@ -47,11 +46,6 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
   const [theme, setTheme] = useState<Theme>(getTheme());
   const headerRef = useRef<HTMLElement | null>(null);
 
-  useLayoutEffect(() => {
-    root.className = headerRef.current?.offsetHeight
-      ? `scroll-pt-[${headerRef.current?.offsetHeight}px]`
-      : "";
-  }, [headerRef.current?.offsetHeight]);
   useEffect(() => {
     setRootTheme(theme);
   }, [theme]);
