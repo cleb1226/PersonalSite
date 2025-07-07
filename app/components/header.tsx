@@ -55,11 +55,18 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
       rootMargin: `-${headerRef?.current?.offsetHeight || 0}px 0px 0px -25%`,
     };
     const callback: IntersectionObserverCallback = (entries) => {
+      const message = entries
+        .map(
+          (entry) =>
+            `${entry.target.id} - is intersecting: ${entry.isIntersecting} - Ratio: ${entry.intersectionRatio}`
+        )
+        .join(" ... ");
+      console.log(message);
       const visible = entries.filter((entry) => entry.isIntersecting);
       if (visible.length > 0) {
         setTab((prev) => {
           visible.sort(
-            (a, b) => b.boundingClientRect.bottom - a.boundingClientRect.bottom
+            (a, b) => a.boundingClientRect.bottom - b.boundingClientRect.bottom
           );
 
           const currentTab = tabs.find(
