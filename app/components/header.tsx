@@ -1,6 +1,7 @@
 import {
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type ReactNode,
@@ -18,6 +19,9 @@ interface HeaderProps {
   expRef: RefObject<HTMLElement | null>;
   eduRef: RefObject<HTMLElement | null>;
 }
+
+const screenHeight = window.visualViewport?.height || 0;
+const screenThreshold = screenHeight * 0.1;
 
 const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
   const setRootTheme = (t: Theme) => {
@@ -39,7 +43,14 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
     return t;
   };
 
-  const [tab, setTab] = useState<Section>(Section.Skill);
+  const [tab, setTab] = useState<IntersectionObserverEntry | null>(null);
+  const tabNumber = useMemo<Section>(() => {
+    const ct = tabs.find((t) => t.section === tab?.target.id);
+    if (ct) {
+      return ct.sectionValue;
+    }
+    return Section.Skill;
+  }, [tab]);
   const [theme, setTheme] = useState<Theme>(getTheme());
   const headerRef = useRef<HTMLElement | null>(null);
 
@@ -47,23 +58,31 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
     setRootTheme(theme);
   }, [theme]);
   useEffect(() => {
+    const rootMarginTop = headerRef?.current?.offsetHeight || 0;
     const options: IntersectionObserverInit = {
-      threshold: 0.3,
-      rootMargin: `-${headerRef?.current?.offsetHeight || 0}px 0px 25% 0px`,
+      threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+      rootMargin: `-${rootMarginTop + 100}px 0px 0px 0px`,
     };
     const callback: IntersectionObserverCallback = (entries) => {
       setTab((prev) => {
-        const visible = entries.filter((entry) => entry.isIntersecting);
+        const visible = entries.filter(
+          (entry) =>
+            entry.isIntersecting &&
+            entry.intersectionRect.height > screenThreshold
+        );
         if (visible.length > 0) {
           visible.sort(
-            (a, b) => a.intersectionRect.height - b.intersectionRect.height
+            (a, b) => a.intersectionRect.bottom - b.intersectionRect.bottom
           );
+          const nextTab = visible[0];
+          const curTabHeight = prev?.intersectionRect.height || 0;
 
-          const currentTab = tabs.find(
-            (t) => t.section === visible[0]?.target.id
-          );
-          if (currentTab && currentTab.sectionValue !== prev) {
-            return currentTab.sectionValue;
+          if (
+            (prev?.target.id !== nextTab.target.id &&
+              curTabHeight < nextTab.intersectionRect.height) ||
+            prev?.target.id === nextTab.target.id
+          ) {
+            return nextTab;
           }
         }
         return prev;
@@ -84,7 +103,7 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
         }
       });
     };
-  }, [skillRef, expRef, eduRef]);
+  }, [skillRef, expRef, eduRef, headerRef]);
 
   const scrollOptions: ScrollIntoViewOptions = {
     behavior: "smooth",
@@ -151,7 +170,7 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
         </div>
       </div>
       <div className="w-full">
-        <Tabs textColor="inherit" value={tab} variant="fullWidth">
+        <Tabs textColor="inherit" value={tabNumber} variant="fullWidth">
           {renderTab()}
         </Tabs>
       </div>
