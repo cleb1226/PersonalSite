@@ -4,13 +4,7 @@ import SkillsSection from "~/components/skillsSection";
 import ExperienceSection from "~/components/experienceSection";
 import EducationSection from "~/components/educationSection";
 import Bio from "~/components/bio";
-import {
-  useInView,
-  type InViewHookResponse,
-} from "react-intersection-observer";
-import { createTheme, useMediaQuery, useTheme } from "@mui/material";
-import { useCallback, useEffect, useRef, type RefObject } from "react";
-import Section from "~/enums/section";
+import { useRef } from "react";
 
 export function meta({}: Route.MetaArgs) {
   return [

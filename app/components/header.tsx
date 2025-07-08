@@ -1,8 +1,6 @@
 import {
   useCallback,
-  useContext,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
   type ReactNode,
@@ -14,7 +12,6 @@ import Tabs from "./tabs";
 import Section from "~/enums/section";
 import Theme from "~/enums/theme";
 import HeaderLinks from "./headerLinks";
-import type { InViewHookResponse } from "react-intersection-observer";
 
 interface HeaderProps {
   skillRef: RefObject<HTMLElement | null>;
@@ -52,16 +49,9 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
   useEffect(() => {
     const options: IntersectionObserverInit = {
       threshold: 0.3,
-      rootMargin: `-${headerRef?.current?.offsetHeight || 0}px 0px 0px -25%`,
+      rootMargin: `-${headerRef?.current?.offsetHeight || 0}px 0px -25% 0px`,
     };
     const callback: IntersectionObserverCallback = (entries) => {
-      const message = entries
-        .map(
-          (entry) =>
-            `${entry.target.id} - is intersecting: ${entry.isIntersecting} - Ratio: ${entry.intersectionRatio}`
-        )
-        .join(" ... ");
-      console.log(message);
       setTab((prev) => {
         const visible = entries.filter((entry) => entry.isIntersecting);
         if (visible.length > 0) {

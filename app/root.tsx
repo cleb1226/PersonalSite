@@ -10,14 +10,6 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import { Skeleton } from "@mui/material";
-import {
-  createContext,
-  useEffect,
-  useReducer,
-  useRef,
-  type RefObject,
-} from "react";
-import { HeaderRefContext } from "./components/headerRef";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -46,7 +38,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {/* <HeaderRefContext value={ref}>{children}</HeaderRefContext> */}
         {children}
         <ScrollRestoration />
         <Scripts />
