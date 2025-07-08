@@ -2,6 +2,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
   type RefObject,
@@ -12,6 +13,7 @@ import Tabs from "./tabs";
 import Section from "~/enums/section";
 import Theme from "~/enums/theme";
 import HeaderLinks from "./headerLinks";
+import { createTheme, useMediaQuery } from "@mui/material";
 
 interface HeaderProps {
   skillRef: RefObject<HTMLElement | null>;
@@ -19,8 +21,19 @@ interface HeaderProps {
   eduRef: RefObject<HTMLElement | null>;
 }
 
-const screenHeight = window.visualViewport?.height || 0;
-const screenThreshold = screenHeight * 0.2;
+const styles = getComputedStyle(document.documentElement);
+const fontSize = parseInt(styles.fontSize) || 0;
+const { breakpoints } = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: parseInt(styles.getPropertyValue("--breakpoint-sm")) * fontSize,
+      md: parseInt(styles.getPropertyValue("--breakpoint-md")) * fontSize,
+      lg: parseInt(styles.getPropertyValue("--breakpoint-lg")) * fontSize,
+      xl: 1536,
+    },
+  },
+});
 
 const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
   const setRootTheme = (t: Theme) => {
@@ -42,6 +55,7 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
     return t;
   };
 
+  const isMd = useMediaQuery(breakpoints.down("md"));
   const [tab, setTab] = useState<IntersectionObserverEntry | null>(null);
   const tabNumber = useMemo<Section>(() => {
     const ct = tabs.find((t) => t.section === tab?.target.id);
@@ -51,32 +65,38 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
     return Section.Skill;
   }, [tab]);
   const [theme, setTheme] = useState<Theme>(getTheme());
+  const headerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     setRootTheme(theme);
   }, [theme]);
   useEffect(() => {
+    const rootMarginTop = headerRef?.current?.offsetHeight || 0;
     const options: IntersectionObserverInit = {
-      threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-      rootMargin: `-55% 0px -25% 0px`,
+      threshold: [
+        0, 0.1, 0.12, 0.14, 0.16, 0.18, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9,
+        1,
+      ],
+      rootMargin: `-${rootMarginTop}px 0px 0px 0px`,
     };
     const callback: IntersectionObserverCallback = (entries) => {
       setTab((prev) => {
-        const visible = entries.filter(
-          (entry) => entry.isIntersecting
-          // &&entry.intersectionRect.height > screenThreshold
-        );
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
         if (visible.length > 0) {
-          visible.sort(
-            (a, b) => a.intersectionRect.bottom - b.intersectionRect.bottom
-          );
           const nextTab = visible[0];
           const curTabHeight = prev?.intersectionRect.height || 0;
+          const curTabRatio = prev?.intersectionRatio || 0;
+          const curComparison = isMd ? curTabHeight : curTabRatio;
+          const nextComparison = isMd
+            ? nextTab.intersectionRect.height
+            : nextTab.intersectionRatio;
 
           if (
-            (prev?.target.id !== nextTab.target.id &&
-              curTabHeight < nextTab.intersectionRect.height) ||
-            prev?.target.id === nextTab.target.id
+            nextTab.intersectionRatio > 0.8 ||
+            nextTab.target.id === prev?.target.id ||
+            nextComparison > curComparison
           ) {
             return nextTab;
           }
@@ -99,7 +119,7 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
         }
       });
     };
-  }, [skillRef, expRef, eduRef]);
+  }, [skillRef, expRef, eduRef, headerRef]);
 
   const scrollOptions: ScrollIntoViewOptions = {
     behavior: "smooth",
@@ -147,7 +167,10 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
   );
 
   return (
-    <header className="sticky top-0 right-0 left-0 z-10 px-4 pt-4 bg-white dark:bg-gray-950 shadow-xl/50 dark:shadow-main/50">
+    <header
+      ref={headerRef}
+      className="sticky top-0 right-0 left-0 z-10 px-4 pt-4 bg-white dark:bg-gray-950 shadow-xl/50 dark:shadow-main/50"
+    >
       <div className="flex flex-nowrap flex-row justify-between w-full mb-5">
         <button
           onClick={onHeaderPress}

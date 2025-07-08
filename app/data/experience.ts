@@ -30,7 +30,7 @@ const experiences: Array<experienceObj> = [
     title: "Freelance Full Stack Web Developer",
     business: "Self",
     startDate: "2019",
-    endDate: "Present",
+    endDate: "2024",
     location: "Remote",
     description:
       "Client facing and personal projects both professionally and pro bono",
