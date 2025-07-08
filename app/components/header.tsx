@@ -21,7 +21,7 @@ interface HeaderProps {
 }
 
 const screenHeight = window.visualViewport?.height || 0;
-const screenThreshold = screenHeight * 0.1;
+const screenThreshold = screenHeight * 0.2;
 
 const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
   const setRootTheme = (t: Theme) => {
@@ -52,16 +52,14 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
     return Section.Skill;
   }, [tab]);
   const [theme, setTheme] = useState<Theme>(getTheme());
-  const headerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     setRootTheme(theme);
   }, [theme]);
   useEffect(() => {
-    const rootMarginTop = headerRef?.current?.offsetHeight || 0;
     const options: IntersectionObserverInit = {
       threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-      rootMargin: `-${rootMarginTop + 100}px 0px 0px 0px`,
+      rootMargin: `-50% 0px 0px 0px`,
     };
     const callback: IntersectionObserverCallback = (entries) => {
       setTab((prev) => {
@@ -103,7 +101,7 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
         }
       });
     };
-  }, [skillRef, expRef, eduRef, headerRef]);
+  }, [skillRef, expRef, eduRef]);
 
   const scrollOptions: ScrollIntoViewOptions = {
     behavior: "smooth",
@@ -151,10 +149,7 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
   );
 
   return (
-    <header
-      ref={headerRef}
-      className="sticky top-0 right-0 left-0 z-10 px-4 pt-4 bg-white dark:bg-gray-950 shadow-xl/50 dark:shadow-main/50"
-    >
+    <header className="sticky top-0 right-0 left-0 z-10 px-4 pt-4 bg-white dark:bg-gray-950 shadow-xl/50 dark:shadow-main/50">
       <div className="flex flex-nowrap flex-row justify-between w-full mb-5">
         <button
           onClick={onHeaderPress}
