@@ -49,7 +49,7 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
   useEffect(() => {
     const options: IntersectionObserverInit = {
       threshold: 0.3,
-      rootMargin: `-${headerRef?.current?.offsetHeight || 0}px 0px -25% 0px`,
+      rootMargin: `-${headerRef?.current?.offsetHeight || 0}px 0px 25% 0px`,
     };
     const callback: IntersectionObserverCallback = (entries) => {
       setTab((prev) => {
