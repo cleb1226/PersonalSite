@@ -51,7 +51,7 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
   }, [theme]);
   useEffect(() => {
     const options: IntersectionObserverInit = {
-      threshold: 0.2,
+      threshold: 0.3,
       rootMargin: `-${headerRef?.current?.offsetHeight || 0}px 0px 0px -25%`,
     };
     const callback: IntersectionObserverCallback = (entries) => {
@@ -62,11 +62,11 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
         )
         .join(" ... ");
       console.log(message);
-      const visible = entries.filter((entry) => entry.isIntersecting);
-      if (visible.length > 0) {
-        setTab((prev) => {
+      setTab((prev) => {
+        const visible = entries.filter((entry) => entry.isIntersecting);
+        if (visible.length > 0) {
           visible.sort(
-            (a, b) => a.boundingClientRect.bottom - b.boundingClientRect.bottom
+            (a, b) => a.intersectionRect.height - b.intersectionRect.height
           );
 
           const currentTab = tabs.find(
@@ -75,9 +75,9 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
           if (currentTab && currentTab.sectionValue !== prev) {
             return currentTab.sectionValue;
           }
-          return prev;
-        });
-      }
+        }
+        return prev;
+      });
     };
     const observer = new IntersectionObserver(callback, options);
     const refs = [skillRef, expRef, eduRef];
