@@ -2,7 +2,6 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
   type ReactNode,
   type RefObject,
@@ -59,14 +58,13 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
   useEffect(() => {
     const options: IntersectionObserverInit = {
       threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-      rootMargin: `-50% 0px -10% 0px`,
+      rootMargin: `-55% 0px -25% 0px`,
     };
     const callback: IntersectionObserverCallback = (entries) => {
       setTab((prev) => {
         const visible = entries.filter(
-          (entry) =>
-            entry.isIntersecting &&
-            entry.intersectionRect.height > screenThreshold
+          (entry) => entry.isIntersecting
+          // &&entry.intersectionRect.height > screenThreshold
         );
         if (visible.length > 0) {
           visible.sort(
