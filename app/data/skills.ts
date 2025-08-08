@@ -21,6 +21,7 @@ import VscodeOriginal from "devicons-react/icons/VscodeOriginal";
 import MicrosoftsqlserverOriginal from "devicons-react/icons/MicrosoftsqlserverOriginal";
 import GithubOriginal from "devicons-react/icons/GithubOriginal";
 import UnrealengineOriginal from "devicons-react/icons/UnrealengineOriginal";
+import DockerOrignal from "devicons-react/icons/DockerOriginal";
 
 export type skillType = {
   type: string;
@@ -77,6 +78,7 @@ const skills: Array<skillType> = [
       { name: "Unreal", icon: UnrealengineOriginal },
       { name: "GameMaker Studio 2" },
       { name: "AutoDesk 3Ds Max" },
+      { name: "Docker", icon: DockerOrignal },
     ],
   },
   {
