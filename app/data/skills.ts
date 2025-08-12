@@ -81,16 +81,6 @@ const skills: Array<skillType> = [
       { name: "Docker", icon: DockerOrignal },
     ],
   },
-  {
-    type: "Paradigms",
-    skills: [
-      { name: "RESTful API" },
-      { name: "Database Normalization" },
-      { name: "Agile/Scrum" },
-      { name: "Responsive Web Development" },
-      { name: "Authentication/Authorization" },
-    ],
-  },
 ];
 
 export default skills;

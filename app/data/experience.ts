@@ -6,6 +6,7 @@ export type experienceObj = {
   location: string;
   description: string;
   tasks: Array<string>;
+  technologies: Array<string>;
 };
 
 const experiences: Array<experienceObj> = [
@@ -19,10 +20,19 @@ const experiences: Array<experienceObj> = [
       "Sabio is a Web Development School meant to quickly teach students the fine details of programming,software engineering, and web development",
     tasks: [
       "Designed student interface and backend to improve communication with students",
-      "Automated file intake system and management using AWS Lambda and S3 Buckets",
+      "Automated file intake system and management using AWS Lambda and S3 Buckets to streamline student onboarding",
       "Normalized and managed T-SQL databases to decrease call time by 40%",
       "Created algorithmic tests to track and detect fraudulent student hours using Wakatime",
-      "Met daily with students to teach, fix problems, and provide feedback on coding projects",
+      "Met daily with students to teach, fix problems, and provide feedback on coding projects to promote student success",
+      "Used Signalr to implemented a real-time update system to ensure rapid response to student questions",
+    ],
+    technologies: [
+      "ReactJS",
+      "DOTNET",
+      "T-SQL",
+      "AWS Lambda",
+      "AWS S3",
+      "SignalR",
     ],
   },
   {
@@ -40,6 +50,7 @@ const experiences: Array<experienceObj> = [
       "Created an online multiplayer board game based off Tiny Epic Galaxies (2020)",
       "Designed a 2-D puzzle platformer with in-depth characterization and full key map rebinding (2019)",
     ],
+    technologies: ["Wix", "React Native", "Unity", "Gamemaker Studio 2"],
   },
   {
     title: "Full Stack Web Developer",
@@ -54,6 +65,7 @@ const experiences: Array<experienceObj> = [
       "Engineered and designed an adaptive survey system for admins to create custom surveys",
       "Implemented Role-Based Routing to dynamically allow or restrict access to certain pages for specific users to improve security",
     ],
+    technologies: ["React", "DOTNET", "T-SQL", "BCrypt"],
   },
   {
     title: "Full Stack Web Developer",
@@ -68,6 +80,7 @@ const experiences: Array<experienceObj> = [
       "Implemented Two-Factor Authentication systems meant to increase security",
       "Engineered email account verification to ensure user validity",
     ],
+    technologies: ["React", "DOTNET", "T-SQL", "Web Cookies"],
   },
   {
     title: "IT Manager",
@@ -83,6 +96,7 @@ const experiences: Array<experienceObj> = [
       "Handled employee tiered access to corporate software to promote principle of least privilege",
       "Implemented communication between various shop platforms. like Wix Marketplace and Facebook Marketplace, to streamline user shopping experience",
     ],
+    technologies: ["Wix", "Facebook Marketplace"],
   },
 ];
 
