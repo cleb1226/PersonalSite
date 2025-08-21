@@ -1,7 +1,7 @@
 const Bio = () => {
   return (
     <section id="who">
-      <p className="font-semibold italic text-center p-5">
+      <p className="font-semibold italic text-center p-5 print:p-3 print:text-sm">
         Experienced software engineer fluent in dozens of programming languages
         and systems with a strong aptitude for full stack development workflows.
         Committed to succinct, legible, and clean code through use of common and

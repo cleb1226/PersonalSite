@@ -13,20 +13,20 @@ const EducationSection = ({ eduRef }: EduProps) => {
         key={`education-${index}`}
       >
         <div className="flex justify-between">
-          <h3 className="text-2xl font-semibold">
+          <h3 className="text-2xl font-semibold print:text-base">
             {edu.level}, {edu.field}
           </h3>
-          <span className="text-right">{edu.finished}</span>
+          <span className="text-right print:text-sm">{edu.finished}</span>
         </div>
         <div className="flex justify-between">
-          <span className="font-semibold">{edu.provider}</span>
+          <span className="font-semibold print:text-sm">{edu.provider}</span>
         </div>
       </div>
     ));
   }, []);
   return (
     <section ref={eduRef} id="education" className="mt-3">
-      <h3 className="text-3xl font-bold">Education</h3>
+      <h3 className="text-3xl font-bold print:text-lg">Education</h3>
       <hr />
       {renderEducation()}
     </section>

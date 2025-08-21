@@ -169,23 +169,25 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
   return (
     <header
       ref={headerRef}
-      className="sticky top-0 right-0 left-0 z-10 px-4 pt-4 bg-white dark:bg-gray-950 shadow-xl/50 dark:shadow-main/50"
+      className="sticky print:relative top-0 right-0 left-0 z-10 px-4 pt-4 bg-white dark:bg-gray-950 shadow-xl/50 dark:shadow-main/50 print:shadow-main/50"
     >
       <div className="flex flex-nowrap flex-row justify-between w-full mb-5">
         <button
           onClick={onHeaderPress}
           className="sm:w-fit text-left cursor-pointer hover:text-main transition-colors duration-200 ease-in-out"
         >
-          <h1 className="text-3xl sm:text-5xl font-extrabold">Caleb Ince</h1>
-          <h2 className="text-2xl sm:text-4xl">
+          <h1 className="text-3xl print:text-xl sm:text-5xl font-extrabold">
+            Caleb Ince
+          </h1>
+          <h2 className="text-2xl print:text-lg sm:text-4xl">
             Full Stack Software and DevOps Engineer
           </h2>
         </button>
-        <div className="flex">
+        <div className="flex print:hidden">
           <HeaderLinks currentTheme={theme} onThemeChange={onThemeChange} />
         </div>
       </div>
-      <div className="w-full">
+      <div className="w-full print:hidden">
         <Tabs textColor="inherit" value={tabNumber} variant="fullWidth">
           {renderTab()}
         </Tabs>
