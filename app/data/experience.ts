@@ -46,9 +46,8 @@ const experiences: Array<experienceObj> = [
     tasks: [
       "Rebuilt Ausland Interiors front-end to be more appealing, responsive and mobile friendly (2024)",
       "Building a mafia style mobile app in react native and a dotnet backend (2024 ongoing)",
-      "Crafted a mobile rogue-lite deckbuilder in Unity (2023)",
-      "Created an online multiplayer board game based off Tiny Epic Galaxies (2020)",
-      "Designed a 2-D puzzle platformer with in-depth characterization and full key map rebinding (2019)",
+      "Created an online multiplayer board game based off Tiny Epic Galaxies using GameMaker Studio (2020)",
+      "Build the engine for a 2-D puzzle platformer with in-depth characterization and full key map rebinding (2019)",
     ],
     technologies: ["Wix", "React Native", "Unity", "Gamemaker Studio 2"],
   },
