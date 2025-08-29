@@ -49,7 +49,7 @@ const experiences: Array<experienceObj> = [
       "Handled employee tiered access to corporate software to promote principle of least privilege",
       "Implemented communication between various shop platforms. like Wix Marketplace and Facebook Marketplace, to streamline user shopping experience",
     ],
-    technologies: ["Wix", "Facebook Marketplace"],
+    technologies: ["Wix", "Facebook/Meta Marketplace", "Wix Marketplace"],
   },
 ];
 
