@@ -36,53 +36,6 @@ const experiences: Array<experienceObj> = [
     ],
   },
   {
-    title: "Freelance Full Stack Web Developer",
-    business: "Self",
-    startDate: "2019",
-    endDate: "2024",
-    location: "Remote",
-    description:
-      "Client facing and personal projects both professionally and pro bono",
-    tasks: [
-      "Rebuilt Ausland Interiors front-end to be more appealing, responsive and mobile friendly (2024)",
-      "Building a mafia style mobile app in react native and a dotnet backend (2024 ongoing)",
-      "Crafted a mobile rogue-lite deckbuilder in Unity (2023)",
-      "Created an online multiplayer board game based off Tiny Epic Galaxies (2020)",
-      "Designed a 2-D puzzle platformer with in-depth characterization and full key map rebinding (2019)",
-    ],
-    technologies: ["Wix", "React Native", "Unity", "Gamemaker Studio 2"],
-  },
-  {
-    title: "Full Stack Web Developer",
-    business: "Rosehip (nee Chamomile)",
-    startDate: "Nov 2021",
-    endDate: "Feb 2022",
-    location: "Remote",
-    description:
-      "Rosehip is a wellness site meant to promote wholeness and connectivity. It focused on wholesome living through the sharing of medical and dietary practices",
-    tasks: [
-      "Created login and security system from scratch for authentication and authorization using salt and hash cryptography",
-      "Engineered and designed an adaptive survey system for admins to create custom surveys",
-      "Implemented Role-Based Routing to dynamically allow or restrict access to certain pages for specific users to improve security",
-    ],
-    technologies: ["React", "DOTNET", "T-SQL", "BCrypt"],
-  },
-  {
-    title: "Full Stack Web Developer",
-    business: "WorldPrints",
-    startDate: "Nov 2021",
-    endDate: "Feb 2022",
-    location: "Remote",
-    description:
-      "Worldprints is a t-shirt designing service meant to allow for customers to create custom t-shirts with a high degree of customizability",
-    tasks: [
-      "Created system to track users cart information using web cookies to improve checkout pipeline",
-      "Implemented Two-Factor Authentication systems meant to increase security",
-      "Engineered email account verification to ensure user validity",
-    ],
-    technologies: ["React", "DOTNET", "T-SQL", "Web Cookies"],
-  },
-  {
     title: "IT Manager",
     business: "Ausland Interiors",
     startDate: "Feb 2017",

@@ -18,6 +18,7 @@ import { createTheme, useMediaQuery } from "@mui/material";
 interface HeaderProps {
   skillRef: RefObject<HTMLElement | null>;
   expRef: RefObject<HTMLElement | null>;
+  projRef: RefObject<HTMLElement | null>;
   eduRef: RefObject<HTMLElement | null>;
 }
 
@@ -35,7 +36,12 @@ const { breakpoints } = createTheme({
   },
 });
 
-const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
+const Header = ({
+  skillRef,
+  expRef,
+  eduRef,
+  projRef,
+}: HeaderProps): ReactNode => {
   const setRootTheme = (t: Theme) => {
     const root = document.getElementsByTagName("html")[0];
     root.dataset.theme = t;
@@ -105,7 +111,7 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
       });
     };
     const observer = new IntersectionObserver(callback, options);
-    const refs = [skillRef, expRef, eduRef];
+    const refs = [skillRef, expRef, projRef, eduRef];
     refs.forEach((ref) => {
       if (ref.current) {
         observer.observe(ref.current);
@@ -148,6 +154,9 @@ const Header = ({ skillRef, expRef, eduRef }: HeaderProps): ReactNode => {
               break;
             case Section.Exp:
               targetRef = expRef;
+              break;
+            case Section.Proj:
+              targetRef = projRef;
               break;
             case Section.Edu:
               targetRef = eduRef;
