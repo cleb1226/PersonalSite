@@ -5,6 +5,7 @@ import ExperienceSection from "~/components/experienceSection";
 import EducationSection from "~/components/educationSection";
 import Bio from "~/components/bio";
 import { useRef } from "react";
+import ProjectsSection from "~/components/projectsSection";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -17,15 +18,22 @@ export default function Home() {
   const skillRef = useRef<HTMLElement | null>(null);
   const expRef = useRef<HTMLElement | null>(null);
   const eduRef = useRef<HTMLElement | null>(null);
+  const projRef = useRef<HTMLElement | null>(null);
 
   return (
     <div>
-      <Header skillRef={skillRef} expRef={expRef} eduRef={eduRef} />
+      <Header
+        skillRef={skillRef}
+        expRef={expRef}
+        projRef={projRef}
+        eduRef={eduRef}
+      />
       <div className="p-5">
         <Bio />
-        <SkillsSection skillRef={skillRef} />
-        <ExperienceSection expRef={expRef} />
-        <EducationSection eduRef={eduRef} />
+        <SkillsSection ref={skillRef} />
+        <ExperienceSection ref={expRef} />
+        <ProjectsSection ref={projRef} />
+        <EducationSection ref={eduRef} />
       </div>
     </div>
   );

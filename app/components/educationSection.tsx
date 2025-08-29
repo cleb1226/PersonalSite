@@ -1,11 +1,8 @@
-import { useCallback, type RefObject } from "react";
+import { useCallback } from "react";
 import education from "~/data/education";
+import type { SectionProps } from "./sectionProps";
 
-interface EduProps {
-  eduRef: RefObject<HTMLElement | null>;
-}
-
-const EducationSection = ({ eduRef }: EduProps) => {
+const EducationSection = ({ ref }: SectionProps) => {
   const renderEducation = useCallback(() => {
     return education.map((edu, index) => (
       <div
@@ -25,7 +22,7 @@ const EducationSection = ({ eduRef }: EduProps) => {
     ));
   }, []);
   return (
-    <section ref={eduRef} id="education" className="mt-3">
+    <section ref={ref} id="education" className="mt-3">
       <h3 className="text-3xl font-bold print:text-lg">Education</h3>
       <hr />
       {renderEducation()}
