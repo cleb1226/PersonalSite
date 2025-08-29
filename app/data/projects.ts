@@ -33,7 +33,7 @@ const projects: Array<projectObj> = [
       "Redesigned Ausland Interiors front-end to be more appealing, responsive and mobile friendly",
       "Worked closely with a team and the client to ensure the new design fit the business",
     ],
-    technologies: ["Wix", "React Native", "Unity", "Gamemaker Studio 2"],
+    technologies: ["Wix", "Facebook/Meta Marketplace", "Wix Marketplace"],
   },
 ];
 
