@@ -1,4 +1,4 @@
-import type { FunctionComponent, ReactElement } from "react";
+import type { FunctionComponent } from "react";
 import JavascriptOriginal from "devicons-react/icons/JavascriptOriginal";
 import JqueryOriginal from "devicons-react/icons/JqueryOriginal";
 import NodejsOriginal from "devicons-react/icons/NodejsOriginal";
@@ -17,7 +17,6 @@ import LinuxOriginal from "devicons-react/icons/LinuxOriginal";
 import ReactOriginal from "devicons-react/icons/ReactOriginal";
 import DotnetcoreOriginal from "devicons-react/icons/DotnetcoreOriginal";
 import DotNetPlain from "devicons-react/icons/DotNetPlain";
-import VscodeOriginal from "devicons-react/icons/VscodeOriginal";
 import MicrosoftsqlserverOriginal from "devicons-react/icons/MicrosoftsqlserverOriginal";
 import GithubOriginal from "devicons-react/icons/GithubOriginal";
 import UnrealengineOriginal from "devicons-react/icons/UnrealengineOriginal";
@@ -45,6 +44,7 @@ const skills: Array<skillType> = [
       { name: "HTML", icon: Html5Original },
       { name: "CSS", icon: Css3Original },
       { name: "Python", icon: PythonOriginal },
+      { name: "Linux", icon: LinuxOriginal },
     ],
   },
   {
@@ -56,8 +56,6 @@ const skills: Array<skillType> = [
       { name: "ADO.NET", icon: DotNetPlain },
       { name: "ASP.NET", icon: DotNetPlain },
       { name: "Node.JS", icon: NodejsOriginal },
-      { name: "SQL-Server", icon: AzuresqldatabaseOriginal },
-      { name: "MS Access" },
     ],
   },
   {
@@ -65,10 +63,10 @@ const skills: Array<skillType> = [
     skills: [
       { name: "AWS", icon: AmazonwebservicesOriginalWordmark },
       { name: "Git", icon: GithubOriginal },
+      { name: "SQL-Server", icon: AzuresqldatabaseOriginal },
       { name: "Microsoft Azure", icon: AzureOriginal },
       { name: "Windows Server" },
       { name: "Docker", icon: DockerOrignal },
-      { name: "Linux", icon: LinuxOriginal },
       { name: "Solidworks" },
       { name: "Unity", icon: UnityOriginal },
       { name: "Unreal", icon: UnrealengineOriginal },
@@ -76,7 +74,7 @@ const skills: Array<skillType> = [
       { name: "AutoDesk 3Ds Max" },
       { name: "JQuery", icon: JqueryOriginal },
       { name: "Bootstrap", icon: BootstrapPlain },
-      { name: "RESTful API" },
+      { name: "MS Access" },
     ],
   },
 ];
