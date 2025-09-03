@@ -23,6 +23,29 @@ body {
   }
 }
 
+section {
+  @apply mt-3;
+  @media print {
+    @apply mt-0;
+  }
+}
+
+h3 {
+  @apply text-3xl;
+  @apply font-bold;
+  @media print {
+    @apply text-base;
+  }
+}
+
+h4 {
+  @apply text-2xl;
+  @apply font-semibold;
+  @media print {
+    @apply text-sm;
+  }
+}
+
 .MuiTab-root {
   --hoverColor: transparent;
   transition: --hoverColor 300ms ease-in-out;

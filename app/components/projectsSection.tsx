@@ -13,16 +13,14 @@ const ProjectsSection = ({ ref }: SectionProps) => {
           key={`experience-${index}`}
         >
           <div className="flex justify-between">
-            <h3 className="text-2xl font-semibold print:text-base">
-              {exp.business}
-            </h3>
-            <h4 className="text-xl align-bottom print:text-sm">{exp.title}</h4>
+            <h4>{exp.business}</h4>
+            <h5 className="text-xl align-bottom print:text-sm">{exp.title}</h5>
           </div>
           <ul className="flex justify-left align-bottom mx-3 mt-1 print:m-0 print:mt-1 print:text-sm">
             <span className="mx-3">Technologies:</span>
             {exp.technologies.map(renderTechs(index))}
           </ul>
-          <ul className="p-3 mr-5 print:ml-2 list-disc">
+          <ul className="p-3 print:py-1 mr-5 print:ml-2 list-disc">
             {exp.tasks.map(renderBullets(index))}
           </ul>
         </div>
@@ -30,10 +28,8 @@ const ProjectsSection = ({ ref }: SectionProps) => {
     });
   }, []);
   return (
-    <section ref={ref} id="projects" className="mt3">
-      <h3 className="text-3xl font-bold print:text-lg">
-        Professional Projects
-      </h3>
+    <section ref={ref} id="projects">
+      <h3>Professional Projects</h3>
       <hr />
       {renderProj()}
     </section>

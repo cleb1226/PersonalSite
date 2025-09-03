@@ -10,9 +10,9 @@ const projects: Array<projectObj> = [
     title: "Full Stack Web Developer",
     business: "Rosehip (nee Chamomile)",
     tasks: [
-      "Created login and security system from scratch for authentication and authorization using salt and hash cryptography",
-      "Engineered and designed an adaptive survey system for admins to create custom surveys",
       "Implemented Role-Based Routing to dynamically allow or restrict access to certain pages for specific users to improve security",
+      "Engineered and designed an adaptive survey system for admins to create custom surveys",
+      "Created login and security system from scratch for authentication and authorization using salt and hash cryptography",
     ],
     technologies: ["React", "DOTNET", "T-SQL", "BCrypt"],
   },
