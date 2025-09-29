@@ -8,7 +8,7 @@ export type educacationObj = {
 const education: Array<educacationObj> = [
   {
     level: "Bachelor of Science",
-    field: "IT",
+    field: "IT, Excel Track (Self-Paced)",
     provider: "Purdue Global University",
     finished: "Summer 2027",
   },
