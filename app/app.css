@@ -39,17 +39,14 @@ h3 {
 }
 
 h4 {
-  @apply text-2xl;
+  @apply text-xl;
+  @apply md:text-2xl;
   @apply font-semibold;
   @media print {
     @apply text-sm;
   }
 }
 
-.MuiTab-root {
-  --hoverColor: transparent;
-  transition: --hoverColor 300ms ease-in-out;
-}
 .MuiTab-root:hover,
 .Mui-selected {
   --hoverColor: --color-main;

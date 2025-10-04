@@ -14,7 +14,7 @@ const ExperienceSection = ({ ref }: SectionProps) => {
         >
           <div className="flex justify-between">
             <h4>{exp.title}</h4>
-            <div className="align-bottom print:text-sm">
+            <div className="align-bottom text-right print:text-sm">
               {exp.startDate} - {exp.endDate}
             </div>
           </div>
@@ -27,8 +27,8 @@ const ExperienceSection = ({ ref }: SectionProps) => {
               {exp.description}
             </i>
           </span>
-          <ul className="flex justify-left align-bottom mx-3 mt-1 print:m-0 print:mt-1 print:text-sm">
-            <span className="mx-3">Technologies:</span>
+          <ul className="flex justify-left flex-wrap align-bottom mx-3 mt-1 print:m-0 print:mt-1 print:text-sm">
+            <span className="mx-3 hidden md:visible">Technologies:</span>
             {exp.technologies.map(renderTechs(index))}
           </ul>
           <ul className="p-3 print:py-1 mr-5 print:ml-2 list-disc">

@@ -14,9 +14,11 @@ const ProjectsSection = ({ ref }: SectionProps) => {
         >
           <div className="flex justify-between">
             <h4>{exp.business}</h4>
-            <h5 className="text-xl align-bottom print:text-sm">{exp.title}</h5>
+            <h5 className="md:text-xl text-base align-bottom text-right print:text-sm ml-1">
+              {exp.title}
+            </h5>
           </div>
-          <ul className="flex justify-left align-bottom mx-3 mt-1 print:m-0 print:mt-1 print:text-sm">
+          <ul className="flex justify-left flex-wrap align-bottom mx-3 mt-1 print:m-0 print:mt-1 print:text-sm">
             <span className="mx-3">Technologies:</span>
             {exp.technologies.map(renderTechs(index))}
           </ul>

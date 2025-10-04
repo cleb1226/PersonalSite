@@ -9,11 +9,11 @@ import {
 } from "react";
 import tabs, { type tabObj } from "../data/tabs";
 import Tab from "./tab";
-import Tabs from "./tabs";
 import Section from "~/enums/section";
 import Theme from "~/enums/theme";
 import HeaderLinks from "./headerLinks";
-import { createTheme, useMediaQuery } from "@mui/material";
+import { Tabs, useMediaQuery } from "@mui/material";
+import getBreakpoints from "./theme";
 
 interface HeaderProps {
   skillRef: RefObject<HTMLElement | null>;
@@ -22,19 +22,7 @@ interface HeaderProps {
   eduRef: RefObject<HTMLElement | null>;
 }
 
-const styles = getComputedStyle(document.documentElement);
-const fontSize = parseInt(styles.fontSize) || 0;
-const { breakpoints } = createTheme({
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: parseInt(styles.getPropertyValue("--breakpoint-sm")) * fontSize,
-      md: parseInt(styles.getPropertyValue("--breakpoint-md")) * fontSize,
-      lg: parseInt(styles.getPropertyValue("--breakpoint-lg")) * fontSize,
-      xl: 1536,
-    },
-  },
-});
+const breakpoints = getBreakpoints();
 
 const Header = ({
   skillRef,
@@ -167,12 +155,15 @@ const Header = ({
         return (
           <Tab
             onClick={onClick}
-            label={tab.name}
+            label={isMd && !!tab.shortName ? tab.shortName : tab.name}
             key={`control-tab-${index}`}
+            classes={{
+              root: "[--hoverColor:transparent] transition-[--hoverColor] duration-300 ease-in-out !text-xs md:!text-sm",
+            }}
           />
         );
       }),
-    []
+    [isMd]
   );
 
   return (
@@ -197,7 +188,15 @@ const Header = ({
         </div>
       </div>
       <div className="w-full print:hidden">
-        <Tabs textColor="inherit" value={tabNumber} variant="fullWidth">
+        <Tabs
+          slotProps={{
+            indicator: { className: "!bg-(--color-main)" },
+          }}
+          textColor="inherit"
+          value={tabNumber}
+          variant="fullWidth"
+          allowScrollButtonsMobile
+        >
           {renderTab()}
         </Tabs>
       </div>
