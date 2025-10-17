@@ -158,7 +158,7 @@ const Header = ({
             label={isMd && !!tab.shortName ? tab.shortName : tab.name}
             key={`control-tab-${index}`}
             classes={{
-              root: "[--hoverColor:transparent] transition-[--hoverColor] duration-300 ease-in-out !text-xs md:!text-sm",
+              root: "xl:w-100 [--hoverColor:transparent] transition-[--hoverColor] duration-300 ease-in-out !text-xs md:!text-sm",
             }}
           />
         );
@@ -187,7 +187,7 @@ const Header = ({
           <HeaderLinks currentTheme={theme} onThemeChange={onThemeChange} />
         </div>
       </div>
-      <div className="w-full print:hidden">
+      <div className="w-full flex justify-center print:hidden">
         <Tabs
           slotProps={{
             indicator: { className: "!bg-(--color-main)" },
@@ -196,6 +196,7 @@ const Header = ({
           value={tabNumber}
           variant="scrollable"
           allowScrollButtonsMobile
+          centered
         >
           {renderTab()}
         </Tabs>
