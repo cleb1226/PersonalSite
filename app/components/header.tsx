@@ -177,7 +177,7 @@ const Header = ({
             Caleb Ince
           </h1>
           <h2 className="text-2xl print:text-base sm:text-4xl">
-            Full Stack Software and DevOps Engineer
+            Full Stack Software Developer
           </h2>
         </button>
         <div className="flex print:hidden">
