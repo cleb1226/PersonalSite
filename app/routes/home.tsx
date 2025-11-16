@@ -5,7 +5,6 @@ import ExperienceSection from "~/components/experienceSection";
 import EducationSection from "~/components/educationSection";
 import Bio from "~/components/bio";
 import { useRef } from "react";
-import ProjectsSection from "~/components/projectsSection";
 
 export function meta({}: Route.MetaArgs) {
   return [

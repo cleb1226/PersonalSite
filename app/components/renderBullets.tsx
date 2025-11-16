@@ -5,7 +5,7 @@ const renderBullets = (index: number) => {
     if (typeof task === "string") {
       return (
         <li
-          className="print:text-xs print:[&:nth-child(n+3)]:hidden"
+          className="print:text-xs print:[&:nth-child(n+4)]:hidden"
           key={`experience-${index}-task-${i}`}
         >
           {task}
