@@ -143,9 +143,6 @@ const Header = ({
             case Section.Exp:
               targetRef = expRef;
               break;
-            case Section.Proj:
-              targetRef = projRef;
-              break;
             case Section.Edu:
               targetRef = eduRef;
               break;
@@ -194,7 +191,8 @@ const Header = ({
           }}
           textColor="inherit"
           value={tabNumber}
-          variant="scrollable"
+          // this needs to be scrollable if there are more than 3 tabs
+          variant="fullWidth"
           allowScrollButtonsMobile
           centered
         >

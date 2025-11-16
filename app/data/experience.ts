@@ -4,17 +4,73 @@ export type experienceObj = {
   startDate: string;
   endDate: string;
   location: string;
-  description: string;
-  tasks: Array<string>;
+  description?: string;
+  tasks: Array<string | freelanceObj>;
   technologies: Array<string>;
+};
+
+export type freelanceObj = {
+  business: string;
+  field: string;
+  goal: string;
+  tasks: Array<string>;
 };
 
 const experiences: Array<experienceObj> = [
   {
-    title: "Software Engineer & Instructor",
+    title: "Freelance Full Stack Software Developer",
+    business: "Freelance",
+    startDate: "June 2024",
+    endDate: "Present",
+    location: "Remote",
+    tasks: [
+      {
+        business: "Ausland Interiors",
+        field: "Interior Design",
+        goal: "Site Redesign",
+        tasks: [
+          "Met with the team regularly to ensure vision is realized",
+          "Rebuilt front end to provide responsive design and streamlined user experience",
+          "Applied SEO to increase site traffic by 22% collectively across all platforms",
+        ],
+      },
+      {
+        business: "Rosehip (nee Chamomile)",
+        field: "Wellness Site",
+        goal: "Built App",
+        tasks: [
+          "Designed and implemented custom admin surveys to better provide communication between users and admin",
+          "Normalized and managed database to optimize search queries by surveying query plans",
+        ],
+      },
+      {
+        business: "World Print",
+        field: "T-Shirt Design Site",
+        goal: "Built App",
+        tasks: [
+          "Implemented authentication and authorization of users through 2FA to improve security",
+          "Created system to track user cart information using web cookies to streamline checkout ",
+        ],
+      },
+    ],
+    technologies: [
+      "ReactJS",
+      ".NET",
+      "T-SQL",
+      "AWS Lambda",
+      "AWS S3",
+      "SignalR",
+      "Wix",
+      "BCyrpt",
+      "Web Security",
+      "Web Cookies",
+    ],
+  },
+  {
+    title: "Full Stack Software Engineer & Instructor",
     business: "Sabio School of Software Engineering",
     startDate: "Feb 2022",
-    endDate: "June 2023",
+    endDate: "June 2024",
     location: "Remote",
     description:
       "Sabio is a Web Development School meant to quickly teach students the fine details of programming,software engineering, and web development",
@@ -28,7 +84,7 @@ const experiences: Array<experienceObj> = [
     ],
     technologies: [
       "ReactJS",
-      "DOTNET",
+      ".NET",
       "T-SQL",
       "AWS Lambda",
       "AWS S3",
@@ -39,7 +95,7 @@ const experiences: Array<experienceObj> = [
     title: "IT Manager",
     business: "Ausland Interiors",
     startDate: "Feb 2017",
-    endDate: "Nov 2019",
+    endDate: "Nov 2020",
     location: "Redondo Beach",
     description:
       "Ausland Interiors is a Interior Design Company working on high end homes and design projects",
@@ -49,7 +105,7 @@ const experiences: Array<experienceObj> = [
       "Managed in office equipment and software, like internet, email systems, and other office supplies, to keep the office organized",
       "Decreased onboarding time by setting up new employees with needed materials and systems",
     ],
-    technologies: ["Wix", "Facebook/Meta Marketplace", "Wix Marketplace"],
+    technologies: ["Wix", "IT Systems"],
   },
 ];
 

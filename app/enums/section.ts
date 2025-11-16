@@ -1,7 +1,6 @@
 enum Section {
   Skill,
   Exp,
-  Proj,
   Edu,
 }
 

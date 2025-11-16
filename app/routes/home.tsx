@@ -32,7 +32,6 @@ export default function Home() {
         <Bio />
         <SkillsSection ref={skillRef} />
         <ExperienceSection ref={expRef} />
-        <ProjectsSection ref={projRef} />
         <EducationSection ref={eduRef} />
       </div>
     </div>
