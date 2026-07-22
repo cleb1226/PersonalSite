@@ -1,13 +1,15 @@
+import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 import {
   faGithub,
   faLinkedin,
   type IconDefinition,
 } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
+import { faGamepad } from "@fortawesome/free-solid-svg-icons";
 
 export type linkObj = {
   href?: string;
-  icon: IconDefinition;
+  icon: IconProp;
   iconFunction?: (bool: boolean) => IconDefinition;
   title: string;
 };
@@ -24,6 +26,11 @@ const links: Array<linkObj> = [
     iconFunction: (bool) => (bool ? faMoon : faSun),
     title: "Change Theme",
     icon: faMoon,
+  },
+  {
+    href: "https://games.calebince.com",
+    title: "Play Some Games",
+    icon: faGamepad,
   },
 ];
 

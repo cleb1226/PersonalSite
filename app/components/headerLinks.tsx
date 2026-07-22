@@ -45,11 +45,11 @@ const HeaderLinks = ({ onThemeChange, currentTheme }: HeaderLinksProps) => {
           </a>
         );
       }),
-    [currentTheme]
+    [currentTheme],
   );
 
   return (
-    <div className="flex flex-col sm:flex-row w-10 sm:w-fit">
+    <div className="flex flex-col flex-wrap sm:flex-row w-20 h-[5rem] sm:h-[unset] sm:w-fit">
       {renderLinks()}
     </div>
   );
