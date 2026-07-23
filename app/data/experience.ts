@@ -18,10 +18,25 @@ export type freelanceObj = {
 
 const experiences: Array<experienceObj> = [
   {
+    title: "Full Stack Software Developer",
+    business: "Venus et Fleur",
+    startDate: "Jan 2026",
+    endDate: "Present",
+    location: "Remote",
+    description:
+      "Venus et Fleur is an Eternity Rose service that provides high quality, long lasting roses for high end clientele",
+    tasks: [
+      'Addressed key design inconsistencies to ensure a streamlined user experience',
+      'Implemented automation on cart management to create a clearer checkout flow',
+      'Created extensions to handle niche discount scenarios to drive increase engagement'
+    ],
+    technologies: ["Shopify", "Shop App", "E-Commerce"],
+  },
+  {
     title: "Freelance Full Stack Software Developer",
     business: "Freelance",
     startDate: "June 2024",
-    endDate: "Present",
+    endDate: "Dec 2025",
     location: "Remote",
     tasks: [
       {

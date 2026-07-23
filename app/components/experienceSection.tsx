@@ -9,7 +9,7 @@ const ExperienceSection = ({ ref }: SectionProps) => {
     return experiences.map((exp, index) => {
       return (
         <div
-          className="p-3 m1 print:m-0 print:p-0 print:pl-2 print:hover:shadow-none hover:shadow-xl hover:shadow-main transition duration-300 ease-in-out"
+          className="p-3 m1 print:m-0 print:p-0 print:pl-2 print:hover:shadow-none hover:shadow-xl hover:shadow-main transition duration-300 ease-in-out print:[&:nth-child(n+4)]:hidden"
           key={`experience-${index}`}
         >
           <div className="flex justify-between">
@@ -43,7 +43,9 @@ const ExperienceSection = ({ ref }: SectionProps) => {
     <section ref={ref} id="experience">
       <h3>Experience</h3>
       <hr />
-      {renderExp()}
+      <span>
+        {renderExp()}
+      </span>
     </section>
   );
 };

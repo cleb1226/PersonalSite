@@ -21,6 +21,8 @@ import MicrosoftsqlserverOriginal from "devicons-react/icons/MicrosoftsqlserverO
 import GithubOriginal from "devicons-react/icons/GithubOriginal";
 import UnrealengineOriginal from "devicons-react/icons/UnrealengineOriginal";
 import DockerOrignal from "devicons-react/icons/DockerOriginal";
+import { faShopify } from "@fortawesome/free-brands-svg-icons";
+import Icon from "~/components/icon";
 
 export type skillType = {
   type: string;
@@ -75,6 +77,8 @@ const skills: Array<skillType> = [
       { name: "JQuery", icon: JqueryOriginal },
       { name: "Bootstrap", icon: BootstrapPlain },
       { name: "MS Access" },
+      { name: "Shopify", icon: Icon(faShopify, "green-500") },
+      { name: "Shop App" },
     ],
   },
 ];
