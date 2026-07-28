@@ -26,9 +26,10 @@ const experiences: Array<experienceObj> = [
     description:
       "Venus et Fleur is an Eternity Rose service that provides high quality, long lasting roses for high end clientele",
     tasks: [
-      'Addressed key design inconsistencies to ensure a streamlined user experience',
-      'Implemented automation on cart management to create a clearer checkout flow',
-      'Created extensions to handle niche discount scenarios to drive increase engagement'
+      "Addressed key design inconsistencies to ensure a streamlined user experience",
+      "Implemented automation on cart management to create a clearer checkout flow",
+      "Created extensions that handle niche discount scenarios to drive increase engagement",
+      "Regularly stress and bug tested site to ensure quality and consistency in theme",
     ],
     technologies: ["Shopify", "Shop App", "E-Commerce"],
   },
